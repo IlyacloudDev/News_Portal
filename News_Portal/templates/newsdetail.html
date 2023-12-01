@@ -1,0 +1,16 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+Post Detail
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+<h1>"{{ post.heading}}"</h1>
+<h1>{{ post.time_in|date:'d M Y'}}</h1>
+<hr>
+<h1>{{ post.text_of_post|censor}}</h1>
+{% endblock content %}

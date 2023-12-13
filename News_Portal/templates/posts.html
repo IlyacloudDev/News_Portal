@@ -11,33 +11,32 @@ Posts
 {% block content %}
     <div align="left" >
         <h1>
-            Пресса: Новости
+            Пресса
         </h1>
     </div>
 
     <hr>
-    {% if posts %}
-        <h1>Новостей на данный момент: {{ posts|length }}</h1>
-        <div style="text-align: center;">
-            <table width="400" border="7" style="display: inline-block;">
-                <tr>
-                    <td>Заголовок</td>
-                    <td>Дата публикации</td>
-                    <td>Содержание</td>
-                </tr>
 
-                {% for post in posts %}
+    {% if posts %}
+        <h1>Постов на данный момент: {{ posts|length }}</h1>
+        <table>
+            <tr>
+                <td>Заголовок</td>
+                <td>Дата публикации</td>
+                <td>Содержание</td>
+            </tr>
+
+            {% for post in posts %}
                 <tr>
                     <td>"{{ post.heading }}"</td>
                     <td>{{ post.time_in|date:'d M Y' }}</td>
                     <td>{{ post.text_of_post|censor|truncatechars:20 }}</td>
                     <td><hr></td>
                 </tr>
-                {% endfor %}
-            </table>
-        </div>
+            {% endfor %}
+        </table>
     {% else %}
-        <h2>Новостей нет!</h2>
+        <h2>Постов нет!</h2>
     {% endif %}
 
     {# Добавляем пагинацию на страницу #}

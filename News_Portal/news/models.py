@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 from django.db.models import Sum
 
 
@@ -16,6 +18,9 @@ class Author(models.Model):
 
         self.rating = post_rating * 3 + comment_rating + compost_rating
         self.save()
+
+    def __str__(self):
+        return self.authorUser.username
 
 
 class Category(models.Model):
@@ -38,6 +43,12 @@ class Category(models.Model):
                                         unique=True,
                                         default=daily)
 
+    def __str__(self):
+        return self.get_name_of_category_display()
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
+
 
 class Post(models.Model):
     article = "AR"
@@ -59,6 +70,9 @@ class Post(models.Model):
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, through='PostCategory')
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
     def like(self):
         self.rating += 1

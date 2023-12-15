@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, PostCategory, Author, User
+from .models import Post, Category, PostCategory, Author
 
 
 # Register your models here.

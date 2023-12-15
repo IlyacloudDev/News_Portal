@@ -24,6 +24,7 @@ Posts
                 <td>Заголовок</td>
                 <td>Дата публикации</td>
                 <td>Содержание</td>
+                <td>Тип</td>
             </tr>
 
             {% for post in posts %}
@@ -31,6 +32,7 @@ Posts
                     <td>"{{ post.heading }}"</td>
                     <td>{{ post.time_in|date:'d M Y' }}</td>
                     <td>{{ post.text_of_post|censor|truncatechars:20 }}</td>
+                    <td>{{ post.get_type_of_post_display }}</td>
                     <td><hr></td>
                 </tr>
             {% endfor %}

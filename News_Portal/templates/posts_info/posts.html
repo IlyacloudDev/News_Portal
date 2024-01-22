@@ -25,6 +25,12 @@ Posts
                 <td>Дата публикации</td>
                 <td>Содержание</td>
                 <td>Тип</td>
+
+                {# Условие получается составным. #}
+                {% if perms.news.change_post or perms.news.delete_post %}
+                <td>Действия</td>
+                {% endif %}
+
             </tr>
 
             {% for post in posts %}
@@ -34,6 +40,17 @@ Posts
                     <td>{{ post.text_of_post|censor|truncatechars:20 }}</td>
                     <td>{{ post.get_type_of_post_display }}</td>
                     <td><hr></td>
+
+                    <td>
+                        {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                        {% if perms.news.change_product %}
+                        <a href="{% url 'product_update' pk=product.id %}">Изменить</a>
+                        {% endif %}
+                        {% if perms.simpleapp.delete_product %}
+                        <a href="{% url 'product_delete' product.id %}">Удалить</a>
+                        {% endif %}
+                    </td>
+
                 </tr>
             {% endfor %}
         </table>

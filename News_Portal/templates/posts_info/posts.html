@@ -17,6 +17,12 @@ Posts
 
     <hr>
 
+    {# Теперь будем проверять не request.user.is_authenticated, а конкретные права #}
+    {% if perms.news.add_post %}
+    <a href="{% url 'article_creating' %}">Добавить Статью</a>
+    <a href="{% url 'news_creating' %}">Добавить Новость</a>
+    {% endif %}
+
     {% if posts %}
         <h1>Постов на данный момент: {{ posts|length }}</h1>
         <table>
@@ -39,15 +45,23 @@ Posts
                     <td>{{ post.time_in|date:'d M Y' }}</td>
                     <td>{{ post.text_of_post|censor|truncatechars:20 }}</td>
                     <td>{{ post.get_type_of_post_display }}</td>
-                    <td><hr></td>
 
                     <td>
                         {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
-                        {% if perms.news.change_product %}
-                        <a href="{% url 'product_update' pk=product.id %}">Изменить</a>
+                        {% if perms.news.change_post %}
+                            {% if post.type_of_post == 'NE'%}
+                                <a href="{% url 'news_updating' pk=post.id %}">Изменить Новость</a>
+                            {% elif post.type_of_post == 'AR' %}
+                                <a href="{% url 'article_updating' pk=post.id %}">Изменить Статью</a>
+                            {% endif %}
                         {% endif %}
-                        {% if perms.simpleapp.delete_product %}
-                        <a href="{% url 'product_delete' product.id %}">Удалить</a>
+
+                        {% if perms.news.delete_post %}
+                            {% if post.type_of_post == 'NE'%}
+                                <a href="{% url 'news_deleting' post.id %}">Удалить</a>
+                            {% elif post.type_of_post == 'AR' %}
+                                <a href="{% url 'article_deleting' post.id %}">Удалить</a>
+                            {% endif %}
                         {% endif %}
                     </td>
 

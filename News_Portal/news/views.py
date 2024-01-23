@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 from .models import Post
 from .filters import PostFilter
@@ -11,20 +13,20 @@ from .forms import NewsForm, ArticleForm
 class PostList(ListView):
     model = Post
     ordering = '-time_in'
-    template_name = 'posts.html'
+    template_name = 'posts_info/posts.html'
     context_object_name = 'posts'
-    paginate_by = 1
+    paginate_by = 10
 
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'post_detail.html'
+    template_name = 'posts_info/post_detail.html'
     context_object_name = 'post'
 
 
 class PostSearch(ListView):
     model = Post
-    template_name = 'post_search.html'
+    template_name = 'posts_info/post_search.html'
     context_object_name = 'posts'
     paginate_by = 10
 
@@ -39,53 +41,59 @@ class PostSearch(ListView):
         return context
 
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     form_class = NewsForm
     model = Post
-    template_name = 'news_update.html'
+    template_name = 'article_news_actions/news_update.html'
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.news
         return super().form_valid(form)
 
 
-class NewsUpdate(UpdateView):
+class NewsUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = NewsForm
     model = Post
-    template_name = 'news_update.html'
+    template_name = 'article_news_actions/news_update.html'
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.news
         return super().form_valid(form)
 
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
-    template_name = 'news_delete.html'
+    template_name = 'article_news_actions/news_delete.html'
     success_url = reverse_lazy('posts_list')
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     form_class = ArticleForm
     model = Post
-    template_name = 'article_update.html'
+    template_name = 'article_news_actions/article_update.html'
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.article
         return super().form_valid(form)
 
 
-class ArticleUpdate(UpdateView):
+class ArticleUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = ArticleForm
     model = Post
-    template_name = 'article_update.html'
+    template_name = 'article_news_actions/article_update.html'
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.article
         return super().form_valid(form)
 
 
-class ArticleDelete(DeleteView):
+class ArticleDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
-    template_name = 'article_delete.html'
+    template_name = 'article_news_actions/article_delete.html'
     success_url = reverse_lazy('posts_list')

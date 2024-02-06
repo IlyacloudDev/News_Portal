@@ -43,35 +43,44 @@ INSTALLED_APPS = [
     'django_filters',
     'news',
     'accounts',
+    'subscriptions',
     
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+
+    'django_apscheduler',
 ]
-
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
-
-LOGIN_REDIRECT_URL = "/posts"
-
-ACCOUNT_EMAIL_REQUIRED = True
-
-ACCOUNT_UNIQUE_EMAIL = True
-
-ACCOUNT_USERNAME_REQUIRED = False
-
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 SITE_ID = 1
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "project.site.notifications"
+EMAIL_HOST_PASSWORD = "lqoppddpcgzndlod"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "project.site.notification@yandex.ru"
+
+SERVER_EMAIL = "project.site.notifications@yandex.ru"
+
+
+LOGIN_REDIRECT_URL = "/posts"
 
 
 MIDDLEWARE = [
@@ -86,7 +95,9 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+
 ROOT_URLCONF = 'News_Portal.urls'
+
 
 TEMPLATES = [
     {
@@ -103,6 +114,13 @@ TEMPLATES = [
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 WSGI_APPLICATION = 'News_Portal.wsgi.application'
 

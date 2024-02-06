@@ -3,6 +3,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
+from News_Portal import settings
+
 from news.models import PostCategory
 
 
@@ -27,6 +29,6 @@ def post_created(instance, **kwargs):
         f'Ссылка на пост: </a>'
     )
     for email in emails:
-        msg = EmailMultiAlternatives(subject, text_content, None, [email])
+        msg = EmailMultiAlternatives(subject, text_content, settings.DEFAULT_FROM_EMAIL, [email])
         msg.attach_alternative(html_content, "text/html")
         msg.send()

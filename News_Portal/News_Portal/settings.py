@@ -54,6 +54,9 @@ INSTALLED_APPS = [
 ]
 
 
+SITE_URL = "http://127.0.0.1:8000"
+
+
 SITE_ID = 1
 
 
@@ -67,17 +70,18 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "project.site.notifications"
-EMAIL_HOST_PASSWORD = "lqoppddpcgzndlod"
+EMAIL_HOST_USER = "nws-portal.notifications"
+EMAIL_HOST_PASSWORD = "fedyhcwotvvlvzsq"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "project.site.notification@yandex.ru"
+DEFAULT_FROM_EMAIL = "nws-portal.notifications@yandex.ru"
 
-SERVER_EMAIL = "project.site.notifications@yandex.ru"
+SERVER_EMAIL = "nws-portal.notifications@yandex.ru"
 
 
 LOGIN_REDIRECT_URL = "/posts"

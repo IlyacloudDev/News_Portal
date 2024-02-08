@@ -2,8 +2,6 @@ import logging
 
 from news.models import (Post, Category)
 
-from News_Portal.settings import TIME_ZONE
-
 import datetime
 
 from django.conf import settings

@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'news',
     'accounts',
     'subscriptions',
+
+    'celery',
+    'redis'
     
     'allauth',
     'allauth.account',
@@ -86,6 +89,18 @@ SERVER_EMAIL = "nws-portal.notifications@yandex.ru"
 
 
 LOGIN_REDIRECT_URL = "/posts"
+
+
+# указываем на URL брокера сообщений
+CELERY_BROKER_URL = 'redis://localhost:6379'
+# указываем на хранилище результатов выполнения задач
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# допустимый формат данных
+CELERY_ACCEPT_CONTENT = ['application/json']
+# метод сериализации задач
+CELERY_TASK_SERIALIZER = 'json'
+# метод сериализации результатов
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 MIDDLEWARE = [

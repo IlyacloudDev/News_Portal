@@ -3,10 +3,11 @@ from django.urls import reverse_lazy
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-
 from .models import Post
 from .filters import PostFilter
 from .forms import NewsForm, ArticleForm
+
+from subscriptions.tasks import post_created
 
 
 # Create your views here.
@@ -46,6 +47,7 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
     form_class = NewsForm
     model = Post
     template_name = 'article_news_actions/news_update.html'
+    post_created.delay(Post.objects.all().last().pk)
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.news
@@ -75,6 +77,7 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
     form_class = ArticleForm
     model = Post
     template_name = 'article_news_actions/article_update.html'
+    post_created.delay(Post.objects.all().last().pk)
 
     def form_valid(self, form):
         form.instance.type_of_post = Post.article

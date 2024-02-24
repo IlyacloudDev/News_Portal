@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'subscriptions',
 
     'celery',
-    'redis'
+    'redis',
     
     'allauth',
     'allauth.account',

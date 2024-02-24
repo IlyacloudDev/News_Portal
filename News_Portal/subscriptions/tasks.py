@@ -19,8 +19,8 @@ def post_created(pk, **kwargs):
     emails = set(User.objects.filter(
         subscriptions__category__in=post.category.all()
     ).values_list('email', flat=True))
-
-    subject = f'Новый пост в категории(-ях) ...'
+    categories_post = ', '.join([c.get_name_of_category_display() for c in post.category.all()])
+    subject = f'Новый пост в категории(-ях) {categories_post}'
 
     text_content = (
         f'Пост: {post.heading}\n'

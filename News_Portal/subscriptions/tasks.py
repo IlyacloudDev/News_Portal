@@ -11,10 +11,9 @@ from news.models import PostCategory, Post
 
 
 @shared_task
-@receiver(m2m_changed, sender=PostCategory)
-def post_created(id, **kwargs):
+def post_created(pk, **kwargs):
 
-    post = Post.objects.get(pk=id)
+    post = Post.objects.get(pk=pk)
     emails = User.objects.filter(
         subscriptions__category__in=post.category.all()
     ).values_list('email', flat=True)

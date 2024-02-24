@@ -50,7 +50,10 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
     post_created.delay(Post.objects.all().last().pk)
 
     def form_valid(self, form):
+        post = form.save(commit=False)
         form.instance.type_of_post = Post.news
+        post.save()
+        post_created.delay(post.pk)
         return super().form_valid(form)
 
 
@@ -77,10 +80,12 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
     form_class = ArticleForm
     model = Post
     template_name = 'article_news_actions/article_update.html'
-    post_created.delay(Post.objects.all().last().pk)
 
     def form_valid(self, form):
+        post = form.save(commit=False)
         form.instance.type_of_post = Post.article
+        post.save()
+        post_created.delay(post.pk)
         return super().form_valid(form)
 
 

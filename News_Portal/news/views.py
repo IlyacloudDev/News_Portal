@@ -47,7 +47,6 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
     form_class = NewsForm
     model = Post
     template_name = 'article_news_actions/news_update.html'
-    post_created.delay(Post.objects.all().last().pk)
 
     def form_valid(self, form):
         post = form.save(commit=False)

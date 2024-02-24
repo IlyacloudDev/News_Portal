@@ -9,7 +9,7 @@ import datetime
 from celery import shared_task
 
 from News_Portal import settings
-from news.models import PostCategory, Post, Category
+from news.models import Post, Category
 
 
 @shared_task

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.cache import cache
 
 from django.db.models import Sum
 
@@ -84,6 +85,10 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.text_of_post[:123]}...'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs) # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}') # затем удаляем его из кэша по ключу, чтобы сбросить его
 
 
 class Comment(models.Model):

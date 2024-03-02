@@ -1,5 +1,7 @@
 from django.urls import path
-# Импортируем созданное нами представление
+# импортируем декоратор для кэширования отдельного представления
+from django.views.decorators.cache import cache_page
+# Импортируем созданные нами представления
 from .views import (PostList, PostDetail,
                     PostSearch, NewsCreate,
                     NewsUpdate, NewsDelete,

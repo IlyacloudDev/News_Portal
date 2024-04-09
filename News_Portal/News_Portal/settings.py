@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+import logging
+
+
+logger = logging.getLogger('django')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django_filters',
+
     'news',
     'accounts',
     'subscriptions',
@@ -54,6 +60,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
 
     'django_apscheduler',
+
+    'psycopg2'
 ]
 
 
@@ -149,12 +157,24 @@ WSGI_APPLICATION = 'News_Portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -210,4 +230,129 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'), # Указываем, куда будем сохранять кэшируемые файлы!
         # Не забываем создать папку cache_files внутри папки с manage.py!
     }
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    # средства форматирования
+    'formatters': {
+        # вывод сообщений в консоль
+        'cnsl_debug': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'cnsl_warning': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'cnsl_error_critical': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        # вывод сообщений в файлы
+        'general': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'errors': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'security': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        # на почту
+        'email': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+    },
+    # фильтры
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    # обработчики
+    'handlers': {
+        'console_debug': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true',],
+            'class': 'logging.StreamHandler',
+            'formatter': 'cnsl_debug'
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true', ],
+            'class': 'logging.StreamHandler',
+            'formatter': 'cnsl_warning'
+        },
+        'console_error': {
+            'level': 'ERROR', # + будет захватываться уровень CRITICAL,
+            # поэтому отдельный обработчик под него можно не делать
+            'filters': ['require_debug_true', ],
+            'class': 'logging.StreamHandler',
+            'formatter': 'cnsl_error_critical'
+        },
+        'general': {
+            'level': 'INFO',
+            'filters': ['require_debug_false', ],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/general.log',
+            'formatter': 'general',
+        },
+        'errors': {
+            'level': 'ERROR', # + будет захватываться уровень CRITICAL,
+            # поэтому отдельный обработчик под него можно не делать
+            'class': 'logging.FileHandler',
+            'filename': 'logs/errors.log',
+            'formatter': 'errors',
+        },
+        'security': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/security.log',
+            'formatter': 'security'
+        },
+        'email': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false', ],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'email'
+        },
+    },
+    # регистраторы
+    'loggers': {
+        'django': {
+            'handlers': ['console_debug', 'console_warning', 'console_error', 'general', ],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['errors', 'email', ],
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['errors', 'email', ],
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['errors', ],
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['errors'],
+            'propagate': True
+        },
+        'django.security': {
+            'handlers': ['security'],
+            'propagate': False,
+        },
+    },
 }

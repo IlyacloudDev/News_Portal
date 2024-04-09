@@ -249,7 +249,7 @@ LOGGING = {
             'datefmt': '%d.%m.%Y %H-%M-%S',
         },
         'cnsl_error_critical': {
-            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)',
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
             'datefmt': '%d.%m.%Y %H-%M-%S',
         },
         # вывод сообщений в файлы
@@ -258,7 +258,7 @@ LOGGING = {
             'datefmt': '%d.%m.%Y %H-%M-%S',
         },
         'errors': {
-            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)',
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
             'datefmt': '%d.%m.%Y %H-%M-%S',
         },
         'security': {
@@ -286,20 +286,20 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_true',],
             'class': 'logging.StreamHandler',
-            'formatter': 'cnsl_debug'
+            'formatter': 'cnsl_debug',
         },
         'console_warning': {
             'level': 'WARNING',
             'filters': ['require_debug_true', ],
             'class': 'logging.StreamHandler',
-            'formatter': 'cnsl_warning'
+            'formatter': 'cnsl_warning',
         },
         'console_error': {
             'level': 'ERROR', # + будет захватываться уровень CRITICAL,
             # поэтому отдельный обработчик под него можно не делать
             'filters': ['require_debug_true', ],
             'class': 'logging.StreamHandler',
-            'formatter': 'cnsl_error_critical'
+            'formatter': 'cnsl_error_critical',
         },
         'general': {
             'level': 'INFO',
@@ -319,13 +319,13 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/security.log',
-            'formatter': 'security'
+            'formatter': 'security',
         },
         'email': {
             'level': 'ERROR',
             'filters': ['require_debug_false', ],
             'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'email'
+            'formatter': 'email',
         },
     },
     # регистраторы
@@ -347,11 +347,11 @@ LOGGING = {
             'propagate': True,
         },
         'django.db.backends': {
-            'handlers': ['errors'],
+            'handlers': ['errors', ],
             'propagate': True
         },
         'django.security': {
-            'handlers': ['security'],
+            'handlers': ['security', ],
             'propagate': False,
         },
     },

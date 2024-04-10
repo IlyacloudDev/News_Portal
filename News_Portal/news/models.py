@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.cache import cache
-
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 
 # Create your models here.
@@ -42,7 +43,9 @@ class Category(models.Model):
     name_of_category = models.CharField(max_length=2,
                                         choices=POSITIONS,
                                         unique=True,
-                                        default=daily)
+                                        default=daily,
+                                        help_text=_('category name'),
+                                        )
 
     def __str__(self):
         return self.get_name_of_category_display()

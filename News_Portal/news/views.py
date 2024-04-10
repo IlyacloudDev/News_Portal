@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
+from django.views.generic import (View, ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
+# from django.utils.translation import gettext as _
 
 from .models import Post
 from .filters import PostFilter
@@ -12,6 +13,15 @@ from subscriptions.tasks import post_created
 
 
 # Create your views here.
+
+
+# class Index(View):
+#     def get(self, request):
+#         string = _('Hello world')
+#
+#         return HttpResponse(string)
+
+
 class PostList(ListView):
     model = Post
     ordering = '-time_in'
@@ -28,7 +38,7 @@ class PostDetail(DetailView):
     def get_object(self, *args, **kwargs): # переопределяем метод получения объекта, как ни странно
 
         obj = cache.get(f'post-{self.kwargs["pk"]}', None) # кэш очень похож на словарь, и метод get действует так же.
-# Он забирает значение по ключу, если его нет, то забирает None.
+        # Он забирает значение по ключу, если его нет, то забирает None.
 
         # если объекта нет в кэше, то получаем его и записываем в кэш
         if not obj:

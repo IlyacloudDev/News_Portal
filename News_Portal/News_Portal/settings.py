@@ -100,6 +100,11 @@ SERVER_EMAIL = "nws-portal.notifications@yandex.ru"
 LOGIN_REDIRECT_URL = "/posts"
 
 
+ADMINS = (
+    ('Ilya', 'ilyastritskiy@yandex.ru'),
+)
+
+
 # указываем на URL брокера сообщений
 CELERY_BROKER_URL = 'redis://localhost:6379'
 # указываем на хранилище результатов выполнения задач
@@ -340,6 +345,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console_debug', 'console_warning', 'console_error', 'general', ],
+            'level': 'DEBUG',
             'propagate': True,
         },
         'django.request': {
@@ -360,6 +366,7 @@ LOGGING = {
         },
         'django.security': {
             'handlers': ['security', ],
+            'level': 'INFO',
             'propagate': False,
         },
     },

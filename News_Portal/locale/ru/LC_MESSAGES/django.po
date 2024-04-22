@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-22 21:23+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\news\models.py:47
+msgid "category name"
+msgstr "имя категории"
+
+#: .\templates\article_news_actions\article_delete.html:22
+msgid "Удаление статьи"
+msgstr "Delete Article"
+
+#: .\templates\article_news_actions\article_delete.html:26
+#: .\templates\article_news_actions\news_delete.html:26
+msgid "Удаляем"
+msgstr "Delete"
+
+#: .\templates\article_news_actions\article_update.html:22
+msgid "Статья"
+msgstr "Article"
+
+#: .\templates\article_news_actions\news_delete.html:22
+msgid "Удаление новости"
+msgstr "Delete News"
+
+#: .\templates\article_news_actions\news_update.html:22
+msgid "Новость"
+msgstr "News"
+
+#: .\templates\posts_info\post_search.html:10
+msgid "Поиск"
+msgstr "Search"
+
+#: .\templates\posts_info\post_search.html:16
+msgid "Поиск постов"
+msgstr "Search of posts"
+
+#: .\templates\posts_info\post_search.html:32
+#: .\templates\posts_info\posts.html:48
+msgid "Заголовок"
+msgstr "Heading"
+
+#: .\templates\posts_info\post_search.html:33
+#: .\templates\posts_info\posts.html:49
+msgid "Дата публикации"
+msgstr "Date of publication"
+
+#: .\templates\posts_info\post_search.html:34
+#: .\templates\posts_info\posts.html:50
+msgid "Содержание"
+msgstr "Content"
+
+#: .\templates\posts_info\post_search.html:47
+msgid "Такого(-их) поста(-ов) нет!"
+msgstr "No posts"
+
+#: .\templates\posts_info\posts.html:32
+msgid "Пресса"
+msgstr "Media"
+
+#: .\templates\posts_info\posts.html:40
+msgid "Добавить Статью"
+msgstr "Add Article"
+
+#: .\templates\posts_info\posts.html:41
+msgid "Добавить Новость"
+msgstr "Add News"
+
+#: .\templates\posts_info\posts.html:45
+msgid "Постов на данный момент"
+msgstr "Posts at the moment"
+
+#: .\templates\posts_info\posts.html:51
+msgid "Тип"
+msgstr "Type"
+
+#: .\templates\posts_info\posts.html:55
+msgid "Действия"
+msgstr "Actions"
+
+#: .\templates\posts_info\posts.html:71
+msgid "Изменить Новость"
+msgstr "Change News"
+
+#: .\templates\posts_info\posts.html:73
+msgid "Изменить Статью"
+msgstr "Change Article"
+
+#: .\templates\posts_info\posts.html:79 .\templates\posts_info\posts.html:81
+msgid "Удалить"
+msgstr "Delete"
+
+#: .\templates\posts_info\posts.html:90
+msgid "Постов нет!"
+msgstr "No posts"
+
+#: .\templates\tst.html:28
+msgid "Check out my new cool translation"
+msgstr "Оцени мой классный перевод"
+
+#~ msgid "Hello world"
+#~ msgstr "Привет мир"

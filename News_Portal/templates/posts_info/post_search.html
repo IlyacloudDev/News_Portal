@@ -1,17 +1,19 @@
 {% extends 'default.html' %}
 
+{% load i18n %}
+
 {% load custom_filters %}
 
 {% load custom_tags %}
 
 {% block title %}
-Searching
+{% trans "Поиск" %}
 {% endblock title %}
 
 {% block content %}
  <div align="left" >
         <h1>
-            Поиск постов
+            {% trans "Поиск постов" %}
         </h1>
     </div>
 
@@ -20,16 +22,16 @@ Searching
         {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
         {{ filterset.form.as_p }}
         {# Добавим кнопку отправки данных формы #}
-        <input type="submit" value="Найти" />
+        <input type="submit" value="Search" />
     </form>
 
     {% if posts %}
         <h1>Постов на данный момент: {{ posts|length }}</h1>
         <table>
             <tr>
-                <td>Заголовок</td>
-                <td>Дата публикации</td>
-                <td>Содержание</td>
+                <td>{% trans "Заголовок" %}</td>
+                <td>{% trans "Дата публикации" %}</td>
+                <td>{% trans "Содержание" %}</td>
             </tr>
 
             {% for post in posts %}
@@ -42,7 +44,7 @@ Searching
             {% endfor %}
         </table>
     {% else %}
-        <h2>Такого(-их) поста(-ов) нет!</h2>
+        <h2>{% trans "Такого(-их) поста(-ов) нет!" %}</h2>
     {% endif %}
 
     {# Добавляем пагинацию на страницу #}

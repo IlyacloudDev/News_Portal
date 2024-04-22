@@ -6,7 +6,7 @@ from .views import (PostList, PostDetail,
                     PostSearch, NewsCreate,
                     NewsUpdate, NewsDelete,
                     ArticleCreate, ArticleUpdate,
-                    ArticleDelete)
+                    ArticleDelete, TestView)
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('articles/create/', ArticleCreate.as_view(), name='article_creating'),
     path('articles/<int:pk>/edit/', ArticleUpdate.as_view(), name='article_updating'),
     path('articles/<int:pk>/delete/', ArticleDelete.as_view(), name='article_deleting'),
+    path('test/', TestView.as_view(), )
 
     # path('hello', Index.as_view(),)
 ]

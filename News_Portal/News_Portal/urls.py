@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('posts/', include('news.urls')),
-    path('subscriptions/', include('subscriptions.urls'))
+    path('subscriptions/', include('subscriptions.urls')),
+    path('i18n/', include('django.conf.urls.i18n'))
 ]

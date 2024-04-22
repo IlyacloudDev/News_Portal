@@ -38,6 +38,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -214,6 +216,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGES = [
+    ('ru', 'Русский'),
+    ('en', 'Английский'),
+]
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -343,9 +350,9 @@ LOGGING = {
     },
     # регистраторы
     'loggers': {
+        # django логгер не бдет пропускать все сообщения(уровень DEBUG)будет игнорироваться
         'django': {
             'handlers': ['console_debug', 'console_warning', 'console_error', 'general', ],
-            'level': 'DEBUG',
             'propagate': True,
         },
         'django.request': {

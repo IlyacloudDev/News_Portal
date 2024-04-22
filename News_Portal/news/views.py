@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import (View, ListView, DetailView, CreateView, UpdateView, DeleteView)
@@ -22,12 +23,19 @@ from subscriptions.tasks import post_created
 #         return HttpResponse(string)
 
 
+class TestView(View):
+    def get(self, request):
+        string = 'Hello world'
+        context = {'string': string}
+        return render(request, 'tst.html', context=context)
+
+
 class PostList(ListView):
     model = Post
     ordering = '-time_in'
     template_name = 'posts_info/posts.html'
     context_object_name = 'posts'
-    paginate_by = 10
+    paginate_by = 5
 
 
 class PostDetail(DetailView):

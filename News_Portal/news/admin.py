@@ -3,8 +3,7 @@ from modeltranslation.admin import TranslationAdmin
 from .models import Post, Category, PostCategory, Author
 
 
-class PostAdmin(admin.ModelAdmin, TranslationAdmin):
-    model = Post
+class PostAdmin(admin.ModelAdmin, ):
     list_display = ('id', 'heading', 'type_of_post', 'posts_categories')
     list_filter = ('category',)
     search_fields = ('heading', 'author__authorUser__username')
@@ -14,12 +13,16 @@ class PostAdmin(admin.ModelAdmin, TranslationAdmin):
         return ', '.join(cat.get_name_of_category_display() for cat in p.category.all())
 
 
+class PostTranslationAdmin(PostAdmin, TranslationAdmin):
+    model = Post
+
+
 class CategoryAdmin(TranslationAdmin):
     model = Category
 
 
 # Register your models here.
-admin.site.register(Post, PostAdmin)
+admin.site.register(Post, PostTranslationAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(PostCategory)
 admin.site.register(Author)

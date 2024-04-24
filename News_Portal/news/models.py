@@ -33,18 +33,18 @@ class Category(models.Model):
     medicine = "ME"
 
     POSITIONS = [
-        (daily, "Ежедневные глобальные новости"),
-        (sport, "Спорт"),
-        (politics, "Политика"),
-        (education, "Образование"),
-        (medicine, "Медицина"),
+        (daily, _("Ежедневные глобальные новости")),
+        (sport, _("Спорт")),
+        (politics, _("Политика")),
+        (education, _("Образование")),
+        (medicine, _("Медицина")),
     ]
 
     name_of_category = models.CharField(max_length=2,
                                         choices=POSITIONS,
                                         unique=True,
                                         default=daily,
-                                        help_text=_('category name'),
+                                        help_text=_('имя категории'),
                                         )
 
     def __str__(self):
@@ -59,8 +59,8 @@ class Post(models.Model):
     news = "NE"
 
     POSITIONS = [
-        (article, "Статья"),
-        (news, "Новость"),
+        (article, _("Статья")),
+        (news, _("Новость")),
     ]
 
     time_in = models.DateTimeField(auto_now_add=True)

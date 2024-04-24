@@ -23,13 +23,6 @@ from subscriptions.tasks import post_created
 #         return HttpResponse(string)
 
 
-class TestView(View):
-    def get(self, request):
-        string = 'Hello world'
-        context = {'string': string}
-        return render(request, 'tst.html', context=context)
-
-
 class PostList(ListView):
     model = Post
     ordering = '-time_in'

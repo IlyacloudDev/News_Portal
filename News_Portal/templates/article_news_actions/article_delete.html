@@ -24,6 +24,6 @@
 <form action="" method="post">
     {% csrf_token %}
     <p>{% trans "Удаляем" %} "{{ object.heading }}"?</p>
-    <input type="submit" value="Delete" />
+    <input type="submit" value="{% trans Удалить %}" />
 </form>
 {% endblock content %}

@@ -1,14 +1,17 @@
-from django.shortcuts import render
+import pytz
+
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import (View, ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
-# from django.utils.translation import gettext as _
+from django.utils import timezone
 
 from .models import Post
 from .filters import PostFilter
 from .forms import NewsForm, ArticleForm
+from .mixins import TimezoneMixin
 
 from subscriptions.tasks import post_created
 
@@ -23,7 +26,7 @@ from subscriptions.tasks import post_created
 #         return HttpResponse(string)
 
 
-class PostList(ListView):
+class PostList(TimezoneMixin, ListView):
     model = Post
     ordering = '-time_in'
     template_name = 'posts_info/posts.html'
@@ -48,7 +51,7 @@ class PostDetail(DetailView):
         return obj
 
 
-class PostSearch(ListView):
+class PostSearch(TimezoneMixin, ListView):
     model = Post
     template_name = 'posts_info/post_search.html'
     context_object_name = 'posts'

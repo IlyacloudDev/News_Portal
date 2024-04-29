@@ -132,6 +132,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'allauth.account.middleware.AccountMiddleware',
+
+    'News_Portal.middlewares.TimezoneMiddleware'
 ]
 
 

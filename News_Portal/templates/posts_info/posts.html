@@ -1,58 +1,45 @@
 {% extends 'default.html' %}
 
-{% load i18n %}
-
 {% load custom_filters %}
 
 {% load custom_tags %}
+
+{% load i18n %}
 
 {% block title %}
 Posts
 {% endblock title %}
 
 {% block content %}
-    <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
-        <input type="hidden" name="next" value="{{ redirect_to }}">
 
-        <select name="language" id="">
-            {% get_available_languages as LANGUAGES %} <!-- получаем языки -->
-            {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
+    {% include "translation.html" %}
 
-            {% for language in languages %} <!-- Итерируясь по списку, выводим их название на языке пользователя и код -->
-                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
-                    {{ language.name }} - {{ language.code }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="set">
-    </form>
+    {% include "timezone.html" %}
 
     <div align="left" >
         <h1>
-            {% trans "Пресса" %}
+            {% trans "Media" %}
         </h1>
     </div>
 
-    <hr>
-
     {# Теперь будем проверять не request.user.is_authenticated, а конкретные права #}
     {% if perms.news.add_post %}
-    <a href="{% url 'article_creating' %}">{% trans "Добавить Статью" %}</a>
-    <a href="{% url 'news_creating' %}">{% trans "Добавить Новость" %}</a>
+    <a href="{% url 'article_creating' %}">{% trans "Add article" %}</a>
+    <a href="{% url 'news_creating' %}">{% trans "Add news" %}</a>
     {% endif %}
 
     {% if posts %}
-        <h1>{% trans "Постов на данный момент" %}: {{ posts|length }}</h1>
+        <h1>{% trans "Posts at the moment" %}: {{ posts|length }}</h1>
         <table>
             <tr>
-                <td>{% trans "Заголовок" %}</td>
-                <td>{% trans "Дата публикации" %}</td>
-                <td>{% trans "Содержание" %}</td>
-                <td>{% trans "Тип" %}</td>
+                <td>{% trans "Heading" %}</td>
+                <td>{% trans "Date of publication" %}</td>
+                <td>{% trans "Content" %}</td>
+                <td>{% trans "Type" %}</td>
 
                 {# Условие получается составным. #}
                 {% if perms.news.change_post or perms.news.delete_post %}
-                <td>{% trans "Действия" %}</td>
+                <td>{% trans "Actions" %}</td>
                 {% endif %}
 
             </tr>
@@ -68,17 +55,17 @@ Posts
                         {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
                         {% if perms.news.change_post %}
                             {% if post.type_of_post == 'NE'%}
-                                <a href="{% url 'news_updating' pk=post.id %}">{% trans "Изменить Новость" %}</a>
+                                <a href="{% url 'news_updating' pk=post.id %}">{% trans "Change news" %}</a>
                             {% elif post.type_of_post == 'AR' %}
-                                <a href="{% url 'article_updating' pk=post.id %}">{% trans "Изменить Статью" %}</a>
+                                <a href="{% url 'article_updating' pk=post.id %}">{% trans "Change article" %}</a>
                             {% endif %}
                         {% endif %}
 
                         {% if perms.news.delete_post %}
                             {% if post.type_of_post == 'NE'%}
-                                <a href="{% url 'news_deleting' post.id %}">{% trans "Удалить" %}</a>
+                                <a href="{% url 'news_deleting' post.id %}">{% trans "Delete" %}</a>
                             {% elif post.type_of_post == 'AR' %}
-                                <a href="{% url 'article_deleting' post.id %}">{% trans "Удалить" %}</a>
+                                <a href="{% url 'article_deleting' post.id %}">{% trans "Delete" %}</a>
                             {% endif %}
                         {% endif %}
                     </td>
@@ -87,7 +74,7 @@ Posts
             {% endfor %}
         </table>
     {% else %}
-        <h2>{% trans "Постов нет!" %}</h2>
+        <h2>{% trans "No posts!" %}</h2>
     {% endif %}
 
     {# Добавляем пагинацию на страницу #}

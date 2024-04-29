@@ -5,13 +5,14 @@
 {% load custom_filters %}
 
 {% block title %}
-{% trans "Детали Поста"}
+    {% trans "Details of post"}
 {% endblock title %}
 
 {% block content %}
-<hr>
-<h1>"{{ post.heading}}"</h1>
-<h1>{{ post.time_in|date:'d M Y'}}</h1>
-<hr>
-<h1>{{ post.text_of_post|censor}}</h1>
+    {% include "translation.html" %}
+    <hr>
+    <h1>"{{ post.heading}}"</h1>
+    <h1>{{ post.time_in|date:'d M Y'}}</h1>
+    <hr>
+    <h1>{{ post.text_of_post|censor}}</h1>
 {% endblock content %}

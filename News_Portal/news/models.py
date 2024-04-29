@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.core.cache import cache
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext_lazy
 
 
 # Create your models here.
@@ -33,18 +32,18 @@ class Category(models.Model):
     medicine = "ME"
 
     POSITIONS = [
-        (daily, _("Ежедневные глобальные новости")),
-        (sport, _("Спорт")),
-        (politics, _("Политика")),
-        (education, _("Образование")),
-        (medicine, _("Медицина")),
+        (daily, _("Daily global news")),
+        (sport, _("Sport")),
+        (politics, _("Political")),
+        (education, _("Education")),
+        (medicine, _("Medicine")),
     ]
 
     name_of_category = models.CharField(max_length=2,
                                         choices=POSITIONS,
                                         unique=True,
                                         default=daily,
-                                        help_text=_('имя категории'),
+                                        help_text=_('category name'),
                                         )
 
     def __str__(self):
@@ -59,21 +58,22 @@ class Post(models.Model):
     news = "NE"
 
     POSITIONS = [
-        (article, _("Статья")),
-        (news, _("Новость")),
+        (article, _("Article")),
+        (news, _("News")),
     ]
 
     time_in = models.DateTimeField(auto_now_add=True)
     type_of_post = models.CharField(max_length=2,
                                     choices=POSITIONS,
-                                    default=news
+                                    default=news,
+                                    verbose_name=_('type of post')
                                     )
-    heading = models.CharField(max_length=30)
-    text_of_post = models.TextField(max_length=2000)
+    heading = models.CharField(max_length=30, verbose_name=_('heading of post'))
+    text_of_post = models.TextField(max_length=2000, verbose_name=_('text of post'))
     rating = models.FloatField(default=0.0)
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category, through='PostCategory')
+    category = models.ManyToManyField(Category, through='PostCategory', verbose_name=_('categories of posts'))
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])

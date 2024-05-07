@@ -1,0 +1,168 @@
+openapi: 3.1.0
+info:
+    title: Новостной портал OpenAPI спецификация
+    version: 0.0.1
+servers:
+    - url: http://localhost:8000/
+paths:
+    /posts:
+        get:
+            summary: Метод получения новостей
+            tags:
+                - Posts
+            operationId: getAllPosts
+            responses:
+                '200':
+                    description: Успешный ответ с постами
+                    content:
+                        application/json:
+                            schema:
+                              $ref: "#/components/schemas/Posts"
+                'default':
+                    description: Всё нестандартное
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+        post:
+            summary: Метод создания поста
+            tags:
+                - Posts
+            operationId: createPost
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Post"
+            responses:
+                '200':
+                    description: Успешный ответ с постом
+                    content:
+                        application/json:
+                            schema:
+                              $ref: "#/components/schemas/Post"
+                'default':
+                    description: Всё нестандартное
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+
+    /posts/{post_id}:
+        get:
+            summary: Метод получения новости по идентификатору
+            tags:
+                - Posts
+            operationId: getPostById
+            parameters:
+            - name: post_id
+              in: path
+              required: true
+              description: Идентификатор поста
+              schema:
+                  type: string
+            responses:
+                '200':
+                    description: Успешный ответ с постом
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Post"
+                'default':
+                    description: Всё нестандартное
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+        delete:
+            summary: Метод удаления поста по идентификатору
+            tags:
+                - Posts
+            operationId: deletePostById
+            parameters:
+            - name: post_id
+              in: path
+              required: true
+              description: Идентификатор поста
+              schema:
+                  type: string
+            responses:
+                '200':
+                    description: Успешный ответ с удалением поста
+                    content:
+                        application/json: {}
+                'default':
+                    description: Всё нестандартное
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+
+components:
+    schemas:
+        Post:
+            type: object
+            required:
+                - time_in
+                - type_of_post
+                - heading
+                - text_of_post
+                - rating
+                - author
+                - category
+            properties:
+                post_id:
+                    type: string
+                    readOnly: true
+                    example: 1
+                time_in:
+                    type: string
+                    description: Время создания поста
+                    format: date-time
+                    example: 2023-11-30 19:28:07.754742
+                type_of_post:
+                    type: string
+                    enum:
+                        - NE - новость
+                        - AR - статья
+                    example: NE
+                heading:
+                    type: string
+                    description: Заголовок
+                    example: Белые медведи - белые!
+                text_of_post:
+                    type: string
+                    description: Текс поста
+                    example: Мишки мишки мишки - они не шишки.
+                rating:
+                    type: integer
+                    description: Рейтинг
+                    example: 5.0
+                author:
+                    type: string
+                    description: Автор поста
+                    example: Dmitriy Reporter
+                category:
+                    type: string
+                    enum:
+                        - DA - дневные глобальные новости
+                        - SP - спорт
+                        - PO - политика
+                        - ED - образование
+                        - ME - медицина
+                    example: DA
+        Posts:
+            type: array
+            items:
+                $ref: "#/components/schemas/Post"
+        Error:
+            type: object
+            required:
+                - code
+                - message
+            properties:
+                code:
+                    type: integer
+                message:
+                    type: string

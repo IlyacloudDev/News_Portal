@@ -31,7 +31,7 @@ class PostList(TimezoneMixin, ListView):
     ordering = '-time_in'
     template_name = 'posts_info/posts.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    paginate_by = 10
 
 
 class PostDetail(DetailView):

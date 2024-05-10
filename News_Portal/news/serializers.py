@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
-from .models import Post, Author
+from .models import Post, Author, Category
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +15,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             'text_of_post',
             'rating',
             'author',
-            'category'
+            'category',
         ]
 
 
@@ -29,7 +30,7 @@ class NewsSerializer(serializers.HyperlinkedModelSerializer):
             'text_of_post',
             'rating',
             'author',
-            'category'
+            'category',
         ]
 
 
@@ -44,5 +45,34 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
             'text_of_post',
             'rating',
             'author',
-            'category'
+            'category',
+        ]
+
+
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            'id',
+            'name_of_category',
+        ]
+
+
+class AuthorSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Author
+        fields = [
+            'id',
+            'rating',
+            'authorUser',
+        ]
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'email',
         ]

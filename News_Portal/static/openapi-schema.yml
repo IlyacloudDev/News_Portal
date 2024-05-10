@@ -5,9 +5,9 @@ info:
 servers:
     - url: http://127.0.0.1:8000/
 paths:
-    /posts:
+    /api/posts:
         get:
-            summary: Method of getting post list
+            summary: Method of getting post
             tags:
                 - Posts
             operationId: getAllPosts

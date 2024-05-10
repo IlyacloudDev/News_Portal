@@ -26,9 +26,9 @@ router = routers.DefaultRouter()
 router.register(r'posts', viewsets.PostViewset)
 router.register(r'news', viewsets.NewsViewset, basename='news')
 router.register(r'articles', viewsets.ArticleViewset, basename='articles')
-router.register(r'categories', viewsets.CategoryViewset, basename='categories')
-router.register(r'authors', viewsets.AuthorViewset, basename='authors')
-router.register(r'users', viewsets.UserViewset, basename='users')
+router.register(r'categories', viewsets.CategoryViewset)
+router.register(r'authors', viewsets.AuthorViewset)
+router.register(r'users', viewsets.UserViewset)
 
 
 urlpatterns = [
@@ -39,8 +39,4 @@ urlpatterns = [
     path('', include('news.urls')),
     path('subscriptions/', include('subscriptions.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('swagger-ui/', TemplateView.as_view(
-        template_name='swagger-ui.html',
-        extra_context={'schema_url': 'openapi-schema'}
-    ), name='swagger-ui'),
 ]

@@ -63,7 +63,9 @@ INSTALLED_APPS = [
 
     'django_apscheduler',
 
-    'psycopg2'
+    'psycopg2',
+
+    'rest_framework',
 ]
 
 

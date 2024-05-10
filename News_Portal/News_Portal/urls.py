@@ -33,10 +33,25 @@ router.register(r'users', viewsets.UserViewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # DRF configuration
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # OpenAPI specification
+    path('swagger-ui/', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url': 'openapi-schema'}
+    ), name='swagger-ui'),
+
+    # allauth extension
     path('accounts/', include('allauth.urls')),
+
+    # own custom apps
     path('', include('news.urls')),
     path('subscriptions/', include('subscriptions.urls')),
+
+    # i18n extension
     path('i18n/', include('django.conf.urls.i18n')),
+
 ]

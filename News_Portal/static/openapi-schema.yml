@@ -5,7 +5,7 @@ info:
 servers:
     - url: http://127.0.0.1:8000/
 paths:
-    /api/posts:
+    /api/posts/:
         get:
             summary: Method of getting post
             tags:
@@ -31,14 +31,14 @@ paths:
                         schema:
                             $ref: "#/components/schemas/Post"
             responses:
-                '200':
+                '201':
                     description: Successfully answer with post
                     content:
                         application/json:
                             schema:
                               $ref: "#/components/schemas/Post"
 
-    /api/posts/{post_id}:
+    /api/posts/{post_id}/:
         get:
             summary: Method of getting post by id
             tags:
